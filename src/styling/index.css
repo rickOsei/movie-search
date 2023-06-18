@@ -61,9 +61,9 @@ code {
   --primary-light-gray: #eee;
   --primary-linear-gradient: linear-gradient(
     270deg,
-    #ffffff 0%,
-    rgba(217, 217, 217, 0.2) 51.04%,
-    #ffffff 100%
+    #000000 0%,
+    rgba(39, 38, 38, 0.697) 51.04%,
+    #0000009f 100%
   );
 }
 

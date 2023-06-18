@@ -14,13 +14,15 @@ import Navbar from "../components/Navbar";
 import MovieCard from "../components/MovieCard";
 import SideModal from "../components/SideModal";
 import ColorModal from "../components/ColorModal";
+import { dummyData } from "../dummy-data";
 
 import { setSearchItem } from "../Features/listSlice";
 import SelectComponent from "../components/SelectComponent";
+import { useDebounce } from "../components/useDebounce";
 
 const ListView = () => {
-  const { pokemonList, searchState, isLoading, isModalOpen } = useSelector(
-    (state) => state.pokemonList
+  const { movieList, searchState, isLoading, isModalOpen } = useSelector(
+    (state) => state.movieList
   );
   const { generalColor } = useSelector((state) => state.generalColor);
 
@@ -28,36 +30,29 @@ const ListView = () => {
 
   const [searchTerm, setSearchTerm] = useState(searchState);
 
-  const [tempPokemonDetails, setTempPokemonDetails] = useState([]);
-
-  const getMovieDetails = (arr) => {
-    arr.forEach(async (pokemon) => {
-      const { data } = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
-      );
-
-      setTempPokemonDetails((prev) => [...prev, data]);
-    });
-  };
+  const [movieDetails, setMovieDetails] = useState(dummyData);
 
   const apiKey = "a310a0e3";
 
-  // const getLatestDetails = async () => {
-  //   const { data } = await axios.get(
-  //     `http://www.omdbapi.com/?apikey=${apiKey}&s="batman"`
-  //   );
-  //   console.log(data);
-  // };
+  const searchQuery = useDebounce(searchTerm, 2000);
 
-  // useEffect(() => {
-  //   getLatestDetails();
-  // }, []);
+  const getMovieDetails = async () => {
+    try {
+      const { data } = await axios.get(
+        `http://www.omdbapi.com/?apikey=${apiKey}&s=${searchQuery}`
+      );
+      setMovieDetails(data.Search);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    getMovieDetails(pokemonList);
-  }, [pokemonList]);
+    getMovieDetails();
+  }, [searchQuery]);
 
-  const pokemonDetails = tempPokemonDetails.slice(0, 500);
+  console.log(movieDetails);
+  console.log(searchQuery);
 
   // react paginate
 
@@ -68,50 +63,51 @@ const ListView = () => {
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(pokemonDetails.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(pokemonDetails.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, tempPokemonDetails]);
+    setCurrentItems(movieDetails.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(movieDetails.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, searchQuery, movieDetails]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % pokemonDetails.length;
+    const newOffset = (event.selected * itemsPerPage) % movieDetails.length;
     setItemOffset(newOffset);
   };
 
   // search logic
 
-  const dispatchSearchItem = () => {
-    if (searchTerm) {
-      dispatch(setSearchItem(searchTerm));
-    }
-  };
-  useEffect(() => {
-    dispatchSearchItem();
-  }, [searchTerm]);
+  // const dispatchSearchItem = () => {
+  //   if (searchTerm) {
+  //     dispatch(setSearchItem(searchTerm));
+  //   }
+  // };
+  // useEffect(() => {
+  //   dispatchSearchItem();
+  // }, [searchTerm]);
 
-  const filteredList = currentItems.filter((pokemon) => {
-    if (searchState && searchTerm) {
-      return pokemon.name
-        .toLocaleLowerCase()
-        .includes(searchState.toLocaleLowerCase());
-    } else {
-      return pokemon;
-    }
-  });
+  // const filteredList = currentItems.filter((pokemon) => {
+  //   if (searchState && searchTerm) {
+  //     return pokemon.name
+  //       .toLocaleLowerCase()
+  //       .includes(searchState.toLocaleLowerCase());
+  //   } else {
+  //     return pokemon;
+  //   }
+  // });
 
   // Conditional rendering
+  console.log(currentItems);
 
-  if (isLoading) {
-    return (
-      <div className="loading-container">
-        <ReactLoading
-          color={generalColor}
-          height={100}
-          width={100}
-          type={"spin"}
-        />
-      </div>
-    );
-  }
+  // if (currentItems.length === 0) {
+  //   return (
+  //     <div className="loading-container">
+  //       <ReactLoading
+  //         color={generalColor}
+  //         height={100}
+  //         width={100}
+  //         type={"spin"}
+  //       />
+  //     </div>
+  //   );
+  // }
   return (
     <>
       <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
@@ -129,8 +125,8 @@ const ListView = () => {
       </div>
       <section className="movie-list-section">
         <div className="movie-list-container">
-          {filteredList.map((pokemon, index) => {
-            return <MovieCard {...pokemon} key={index} />;
+          {currentItems.map((movie, index) => {
+            return <MovieCard {...movie} key={index} />;
           })}
         </div>
         <div className="pagination-controls">
@@ -157,7 +153,7 @@ const ListView = () => {
       </section>
 
       <ColorModal />
-      <SideModal pokemonDetails={pokemonDetails} />
+      <SideModal />
     </>
   );
 };

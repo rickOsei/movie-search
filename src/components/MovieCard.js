@@ -1,17 +1,17 @@
 import ViewButton from "./ViewButton";
 import { useDispatch, useSelector } from "react-redux";
-import { setPokemonName, openSideModal } from "../Features/listSlice";
+import { setMovieId, openSideModal } from "../Features/listSlice";
 import "../styling/movieCard.css";
 
-const MovieCard = ({ name, types, sprites }) => {
-  const { isModalOpen, pokemonName } = useSelector(
-    (state) => state.pokemonList
-  );
+const MovieCard = ({ Title, Year, Poster, imdbID }) => {
+  const { isModalOpen, movieId } = useSelector((state) => state.movieList);
+
+  const { generalColor } = useSelector((state) => state.generalColor);
 
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(setPokemonName(name));
+    dispatch(setMovieId(imdbID));
     dispatch(openSideModal());
   };
 
@@ -19,26 +19,23 @@ const MovieCard = ({ name, types, sprites }) => {
     <>
       <article className="movie-card">
         <figure className="movie-icon">
-          <img src={sprites.other.dream_world.front_default} alt={name} />
+          <img src={Poster} alt={Title} />
         </figure>
         <div className="movie-details">
-          <h1 className="movie-name">{name}</h1>
-          <div className="movie-types">
-            {types.map((pokemon, index) => {
-              return (
-                <h4 className="movie-type" key={index}>
-                  {pokemon.type.name}
-                </h4>
-              );
-            })}
-          </div>
+          <h1 className="movie-title">{Title}</h1>
+          <div className="movie-year">{Year}</div>
         </div>
         <div className="overlay">
-          <div className="overlay-items">
-            <button className="view-more">View More</button>
+          <div
+            className="overlay-items"
+            style={{
+              border: `2px solid ${generalColor}`,
+            }}
+            onClick={handleClick}
+          >
+            <ViewButton />
           </div>
         </div>
-        <ViewButton handleClick={handleClick} />
       </article>
     </>
   );

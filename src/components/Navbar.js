@@ -45,7 +45,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
         className="nav-color-selector"
         onClick={() => dispatch(openModal())}
       >
-        <ColorSelector color={generalColor} />
+        <ColorSelector color={generalColor} border="#484747" />
       </section>
     </nav>
   );

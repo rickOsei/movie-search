@@ -1,30 +1,29 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+// import axios from "axios";
 
-export const getPokemonData = createAsyncThunk(
-  "cart/getPokemonData",
-  async () => {
-    try {
-      const {
-        data: { results },
-      } = await axios.get("https://pokeapi.co/api/v2/pokemon/?limit=500");
-      return results;
-    } catch (err) {
-      console.log(err);
-    }
-  }
-);
+// export const getPokemonData = createAsyncThunk(
+//   "cart/getPokemonData",
+//   async () => {
+//     try {
+//       const {
+//         data: { results },
+//       } = await axios.get("https://pokeapi.co/api/v2/pokemon/?limit=500");
+//       return results;
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   }
+// );
 
 const initialState = {
-  pokemonList: [],
-  pokemonName: "",
+  movieList: [],
+  movieId: "",
   searchState: "",
-  isLoading: true,
   isModalOpen: false,
 };
 
 const ListSlice = createSlice({
-  name: "pokemon",
+  name: "movie",
   initialState,
   reducers: {
     setSearchItem: (state, action) => {
@@ -33,10 +32,10 @@ const ListSlice = createSlice({
         searchState: action.payload,
       };
     },
-    setPokemonName: (state, action) => {
+    setMovieId: (state, action) => {
       return {
         ...state,
-        pokemonName: action.payload,
+        movieId: action.payload,
       };
     },
     openSideModal: (state, action) => {
@@ -52,22 +51,22 @@ const ListSlice = createSlice({
       };
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(getPokemonData.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(getPokemonData.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.pokemonList = action.payload;
-    });
-    builder.addCase(getPokemonData.rejected, (state) => {
-      state.isLoading = false;
-    });
-  },
+  // extraReducers: (builder) => {
+  //   builder.addCase(getPokemonData.pending, (state) => {
+  //     state.isLoading = true;
+  //   });
+  //   builder.addCase(getPokemonData.fulfilled, (state, action) => {
+  //     state.isLoading = false;
+  //     state.movieList = action.payload;
+  //   });
+  //   builder.addCase(getPokemonData.rejected, (state) => {
+  //     state.isLoading = false;
+  //   });
+  // },
 });
 
 const ListReducer = ListSlice.reducer;
-export const { setSearchItem, setPokemonName, openSideModal, closeSideModal } =
+export const { setSearchItem, setMovieId, openSideModal, closeSideModal } =
   ListSlice.actions;
 
 export default ListReducer;

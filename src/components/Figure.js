@@ -1,13 +1,13 @@
 import { useDispatch } from "react-redux";
 import React, { useState, useEffect } from "react";
 
-import { FaArrowLeft } from "react-icons/fa";
+import { MdClose } from "react-icons/md";
 
 import { closeSideModal } from "../Features/listSlice";
 
 import ColorThief from "colorthief";
 
-const Figure = ({ sprites, singlePokemonDetails, name }) => {
+const Figure = ({ poster }) => {
   const [rgb, setRgb] = useState([]);
   const dispatch = useDispatch();
 
@@ -26,9 +26,8 @@ const Figure = ({ sprites, singlePokemonDetails, name }) => {
   }
 
   useEffect(() => {
-    getDominantColor(`${sprites.other.dream_world.front_default}`, setRgb);
-    // }
-  }, [singlePokemonDetails]);
+    getDominantColor(`${poster}`, setRgb);
+  }, [poster]);
   return (
     <figure
       className="side-modal-icon"
@@ -43,10 +42,10 @@ const Figure = ({ sprites, singlePokemonDetails, name }) => {
         className="side-modal-close-btn"
         onClick={() => dispatch(closeSideModal())}
       >
-        <FaArrowLeft />
+        <MdClose />
       </button>
 
-      <img src={sprites.other.dream_world.front_default} alt={name} />
+      <img src={poster} alt={poster} />
     </figure>
   );
 };

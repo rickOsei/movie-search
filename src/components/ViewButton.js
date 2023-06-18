@@ -10,7 +10,7 @@ const ViewButton = ({ handleClick }) => {
       onClick={handleClick}
       style={{ background: generalColor }}
     >
-      View Pokemon <BsEyeFill />
+      View Details <BsEyeFill />
     </button>
   );
 };

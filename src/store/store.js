@@ -4,7 +4,7 @@ import ListReducer from "../Features/listSlice";
 import ColorReducer from "../Features/colorSlice";
 
 const rootReducer = combineReducers({
-  pokemonList: ListReducer,
+  movieList: ListReducer,
   generalColor: ColorReducer,
 });
 

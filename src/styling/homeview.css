@@ -53,6 +53,7 @@
   border: 8px solid;
   border-radius: 60px;
   font-size: 15px;
+  color: rgb(137, 137, 137);
 }
 
 .search-view input::placeholder {

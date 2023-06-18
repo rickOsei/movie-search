@@ -1,10 +1,8 @@
 .movie-card {
-  width: 300px;
-  height: 360px;
-  max-height: auto;
-  padding: 10px;
+  width: 100%;
+  height: 500px;
 
-  border-radius: 20px;
+  border-radius: 2px;
   background: #0d0d0d;
   box-shadow: 1px 2px 2px 2px rgba(54, 54, 54, 0.231);
   display: flex;
@@ -17,48 +15,37 @@
 .movie-icon {
   background: var(--primary-light-gray);
   width: 100%;
-  height: 175px;
+  height: 80%;
   display: flex;
   justify-content: center;
-  position: relative;
-  border-radius: 20px;
+  border-radius: 2px;
+  border: 2px solid #b5b4b4;
 }
 
 .movie-icon img {
-  width: 200px;
-  height: 200px;
-
-  position: absolute;
-  bottom: 30px;
+  width: 100%;
+  height: 100%;
 }
 
 .movie-details {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  padding: 5px 10px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.movie-name {
-  font-size: 24px;
+.movie-title,
+.movie-year {
+  font-size: 13px;
   font-weight: 500;
+  color: #fff;
 }
 
-.movie-types {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.movie-type {
-  padding: 5px 25px;
-  background: var(--primary-light-gray);
-  border-radius: 40px;
-
-  text-transform: capitalize;
+.movie-year {
+  color: #ffffff6f;
   font-weight: 400;
-  margin: 10px;
 }
 
 .movie-card .overlay {
@@ -75,8 +62,12 @@
 }
 
 .movie-card .overlay .overlay-items {
-  background: red;
+  background: rgba(0, 0, 0, 0.479);
   height: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .movie-card .overlay:hover {
@@ -84,17 +75,28 @@
 }
 
 .view-btn {
-  padding: 15px;
-  margin-bottom: 10px;
+  padding: 10px 15px;
   border: none;
-  border-radius: 20px;
-  font-size: 18px;
+  border-radius: 2px;
+  box-shadow: 2px 2px 2px 2px rgba(30, 30, 30, 0.385);
+  font-size: 15px;
+  font-weight: 600;
   color: var(--primary-white);
-
-  display: none;
-  justify-content: space-between;
 }
 
-.movie-card:hover > .view-btn {
-  display: flex;
+.view-btn svg {
+  position: relative;
+  top: 2px;
+}
+
+@media screen and (380px <= width <= 499px) {
+  .movie-card {
+    height: 600px;
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  .movie-card {
+    height: 700px;
+  }
 }

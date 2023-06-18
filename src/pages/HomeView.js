@@ -5,7 +5,6 @@ import { MdOutlineSearch } from "react-icons/md";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import Logo from "../svg/Logo";
 import Title from "../components/Title";
 import { setSearchItem } from "../Features/listSlice";
 
@@ -18,16 +17,14 @@ const HomeView = ({ color }) => {
 
   const dispatchSearchItem = () => {
     dispatch(setSearchItem(searchInput));
-    navigate("/pokemon-list");
+    navigate("/movie-list");
   };
 
   return (
     <main>
       <div className="home-main-container">
         <section className="logo-name-description">
-          <figure className="home-logo">
-            <Logo />
-          </figure>
+          <figure className="home-logo"></figure>
           <Title fontSize="48px" margin="0 0 15px 0" />
         </section>
 

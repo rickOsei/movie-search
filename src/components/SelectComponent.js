@@ -1,9 +1,10 @@
 import { useState } from "react";
 
 import { FiChevronDown } from "react-icons/fi";
+import { useSelector } from "react-redux";
 
 const SelectComponent = ({ itemsPerPage, setItemsPerPage }) => {
-  const options = [8, 12, 24];
+  const options = [8, 10];
   const [isOpen, setIsOpen] = useState(false);
 
   const toggling = () => setIsOpen(!isOpen);
@@ -12,6 +13,7 @@ const SelectComponent = ({ itemsPerPage, setItemsPerPage }) => {
     setItemsPerPage(value);
     setIsOpen(false);
   };
+  const { generalColor } = useSelector((state) => state.generalColor);
 
   return (
     <article>
@@ -30,7 +32,7 @@ const SelectComponent = ({ itemsPerPage, setItemsPerPage }) => {
                   className="listItem"
                   style={{
                     background:
-                      itemsPerPage === option ? "#df3939" : "transparent",
+                      itemsPerPage === option ? "#818181" : "transparent",
                   }}
                 >
                   {option}

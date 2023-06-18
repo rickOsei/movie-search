@@ -3,19 +3,7 @@ import { useSelector } from "react-redux";
 
 const Similar = ({ types, pokemonDetails }) => {
   const [similar, setSimilar] = useState([]);
-  const { pokemonName } = useSelector((state) => state.pokemonList);
-
-  const pokemonType = types[0].type.name;
-  const getSimilarPokemonFunc = () => {
-    const similarPokemon = pokemonDetails.filter((pokemon) => {
-      return pokemon.types[0].type.name === pokemonType;
-    });
-    setSimilar(similarPokemon);
-  };
-
-  useEffect(() => {
-    getSimilarPokemonFunc();
-  }, [pokemonName, pokemonType]);
+  const { movieId } = useSelector((state) => state.movieList);
 
   if (similar.length === 0) {
     return (

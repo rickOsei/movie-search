@@ -28,8 +28,8 @@ const ColorModal = () => {
         <div className="color-group">
           <div className="primary" onClick={() => handleColorChange("#DF3939")}>
             <ColorSelector
-              color="#E85382"
-              border={generalColor === "#E85382" ? "black" : "transparent"}
+              color="#DF3939"
+              border={generalColor === "#E85382" ? "#bababa" : "transparent"}
             />
           </div>
           <div
@@ -38,7 +38,7 @@ const ColorModal = () => {
           >
             <ColorSelector
               color="#39BADF"
-              border={generalColor === "#39BADF" ? "black" : "transparent"}
+              border={generalColor === "#39BADF" ? "#bababa" : "transparent"}
             />
           </div>
           <div
@@ -47,7 +47,7 @@ const ColorModal = () => {
           >
             <ColorSelector
               color="#E1A725"
-              border={generalColor === "#E1A725" ? "black" : "transparent"}
+              border={generalColor === "#E1A725" ? "#bababa" : "transparent"}
             />
           </div>
         </div>

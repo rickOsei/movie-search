@@ -7,37 +7,79 @@ import Figure from "./Figure";
 import Similar from "./Similar";
 import AboutPokemon from "./AboutPokemon";
 import PokemonStats from "./PokemonStats";
+import axios from "axios";
+import { dummyObject } from "../dummy-data";
+import imdb from "../images/imdb.png";
+import tomato from "../images/tomato.png";
 
-const SideModal = ({ pokemonDetails }) => {
-  const [activeButton, setActiveButton] = useState("about");
-  const [singlePokemonDetails, setSinglePokemonDetails] = useState([]);
-  const { pokemonName, isModalOpen } = useSelector(
-    (state) => state.pokemonList
-  );
+const SideModal = () => {
+  const { movieId, isModalOpen } = useSelector((state) => state.movieList);
+  const [singleMovieDetails, setSingleMovieDetails] = useState(dummyObject);
+  const [reviews, setReviews] = useState([]);
+  const apiKey = "a310a0e3";
+
+  const getMoreMovieDetails = async () => {
+    if (movieId) {
+      try {
+        const { data } = await axios.get(
+          `https://www.omdbapi.com/?i=${movieId}&apikey=${apiKey}`
+        );
+        setSingleMovieDetails(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   useEffect(() => {
-    if (pokemonName) {
-      setSinglePokemonDetails(
-        pokemonDetails.filter((pokemon) => pokemon.name === pokemonName)
-      );
+    getMoreMovieDetails();
+  }, [movieId]);
+
+  const {
+    Poster,
+    Title,
+    Year,
+    Genre,
+    Ratings,
+    Plot,
+    Runtime,
+    imdbRating,
+    Actors,
+  } = singleMovieDetails;
+
+  // Getting Reviews
+  const key = "9WouZZwa9H2ftdsaUazlM23fIRtgrBVr";
+  const url = `https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=${Title}&api-key=${key}`;
+
+  const getReviews = async () => {
+    try {
+      const { data } = await axios.get(url);
+      setReviews("");
+      if (data.results) {
+        setReviews(data.results);
+      }
+    } catch (error) {
+      console.log(error);
     }
-  }, [pokemonDetails]);
+  };
 
-  if (singlePokemonDetails.length === 0) {
-    return (
-      <aside
-        className="side-modal-container"
-        style={{
-          right: isModalOpen ? 0 : "-150%",
-        }}
-      >
-        <h1>Loading...</h1>
-      </aside>
-    );
-  }
+  useEffect(() => {
+    getReviews();
+  }, [movieId, singleMovieDetails]);
+  console.log(reviews);
 
-  const { sprites, name, types, abilities, height, weight, stats } =
-    singlePokemonDetails[0];
+  // if (singleMovieDetails.length<1) {
+  //   return (
+  //     <aside
+  //       className="side-modal-container"
+  //       style={{
+  //         right: isModalOpen ? 0 : "-150%",
+  //       }}
+  //     >
+  //       <h1>Loading...</h1>
+  //     </aside>
+  //   );
+  // }
 
   return (
     <aside
@@ -52,78 +94,49 @@ const SideModal = ({ pokemonDetails }) => {
           right: isModalOpen ? 0 : "-150%",
         }}
       >
-        <section className="pokemon-desc">
-          <Figure
-            sprites={sprites}
-            singlePokemonDetails={singlePokemonDetails}
-            name={name}
-          />
-          <div className="pokemon-details">
-            <h1 className="side-modal-pokemon-name">{name}</h1>
-            <div className="pokemon-types">
-              {types.map((pokemon, index) => {
-                return (
-                  <h4 className="side-modal-pokemon-type" key={index}>
-                    {pokemon.type.name}
-                  </h4>
-                );
-              })}
+        <section className="movie-desc">
+          <Figure poster={Poster} />
+          <div className="sidebar-movie-details">
+            <p className="title">{Title}</p>
+            <p className="other-info">
+              {Year} | {Genre} | {Runtime}
+            </p>
+          </div>
+          <div className="ratings-row">
+            {Ratings.map((rating, index) => {
+              return (
+                <div className="ratings">
+                  <img src={tomato} alt="rating" />
+                  {rating.Value}
+                </div>
+              );
+            })}
+            <div className="imdb">
+              <img src={imdb} alt="rating" />
+              {imdbRating}
             </div>
           </div>
-        </section>
-        <section
-          className="about-pokemon"
-          style={{ display: activeButton === "about" ? "flex" : "none" }}
-        >
-          <AboutPokemon height={height} weight={weight} abilities={abilities} />
-        </section>
-        <section
-          className="pokemon-stats"
-          style={{ display: activeButton === "stats" ? "flex" : "none" }}
-        >
-          <h1 className="side-modal-title">Stats</h1>
-          <PokemonStats stats={stats} />
-        </section>
-        <section
-          className="similar-pokemon-section"
-          style={{ display: activeButton === "similar" ? "block" : "none" }}
-        >
-          <h1 className="side-modal-title">Similar</h1>
-          <div className="similar-pokemon">
-            <Similar types={types} pokemonDetails={pokemonDetails} />
-          </div>
-        </section>
+          <p className="plot">{Plot}</p>
+          <p className="actors">Actors: {Actors}</p>
+          <div className="reviews">
+            <div className="movie">
+              <div className="title">
+                <h2>Reviews</h2>
+              </div>
+              <div className="details">
+                <h4 className="rating">
+                  {reviews[0]?.mpaa_rating || "Unrated"}
+                </h4>
+                <h4 className="genre">{reviews[0]?.critics_pick}</h4>
+                <h4 className="direct">{reviews[0]?.publication_date}</h4>
+              </div>
+              <p className="info">{reviews[0]?.summary_short}</p>
+              <h4 className="byline">
+                <span>by</span> {reviews[0]?.byline}
+              </h4>
 
-        <section className="side-modal-buttons">
-          <div className="button-container">
-            <button
-              className="side-btn"
-              onClick={() => setActiveButton("about")}
-              style={{
-                background: activeButton === "about" ? "white" : "transparent",
-              }}
-            >
-              About
-            </button>
-            <button
-              className="side-btn"
-              onClick={() => setActiveButton("stats")}
-              style={{
-                background: activeButton === "stats" ? "white" : "transparent",
-              }}
-            >
-              Stats
-            </button>
-            <button
-              className="side-btn"
-              onClick={() => setActiveButton("similar")}
-              style={{
-                background:
-                  activeButton === "similar" ? "white" : "transparent",
-              }}
-            >
-              Similar
-            </button>
+              <h4 className="headline">{reviews[0]?.headline}</h4>
+            </div>
           </div>
         </section>
       </div>
