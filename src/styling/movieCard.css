@@ -1,0 +1,100 @@
+.movie-card {
+  width: 300px;
+  height: 360px;
+  max-height: auto;
+  padding: 10px;
+
+  border-radius: 20px;
+  background: #0d0d0d;
+  box-shadow: 1px 2px 2px 2px rgba(54, 54, 54, 0.231);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.5s;
+  overflow: hidden;
+  position: relative;
+}
+
+.movie-icon {
+  background: var(--primary-light-gray);
+  width: 100%;
+  height: 175px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  border-radius: 20px;
+}
+
+.movie-icon img {
+  width: 200px;
+  height: 200px;
+
+  position: absolute;
+  bottom: 30px;
+}
+
+.movie-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.movie-name {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.movie-types {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.movie-type {
+  padding: 5px 25px;
+  background: var(--primary-light-gray);
+  border-radius: 40px;
+
+  text-transform: capitalize;
+  font-weight: 400;
+  margin: 10px;
+}
+
+.movie-card .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transition: all 0.5s linear;
+}
+
+.movie-card .overlay .overlay-items {
+  background: red;
+  height: 50%;
+}
+
+.movie-card .overlay:hover {
+  transform: translateY(-50%);
+}
+
+.view-btn {
+  padding: 15px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 20px;
+  font-size: 18px;
+  color: var(--primary-white);
+
+  display: none;
+  justify-content: space-between;
+}
+
+.movie-card:hover > .view-btn {
+  display: flex;
+}
