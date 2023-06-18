@@ -1,0 +1,136 @@
+@import url("https://fonts.cdnfonts.com/css/clash-display");
+
+@font-face {
+  font-family: "General-Sans";
+  src: local("General-Sans"),
+    url("../fonts/GeneralSans-Variable.ttf") format("truetype");
+}
+
+/* Global */
+
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "General-Sans", sans-serif;
+}
+
+h1 {
+  font-family: "Clash Display", sans-serif;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-image: url("../images/background2copy.png");
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  font-family: "Clash Display", sans-serif;
+  margin-top: 25px;
+}
+
+button {
+  cursor: pointer;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+:root {
+  --primary-white: #fff;
+  --primary-light-gray: #eee;
+  --primary-linear-gradient: linear-gradient(
+    270deg,
+    #ffffff 0%,
+    rgba(217, 217, 217, 0.2) 51.04%,
+    #ffffff 100%
+  );
+}
+
+/* Components */
+.main-title {
+  font-weight: 700;
+
+  text-align: center;
+  letter-spacing: 4px;
+  font-family: "Clash Display", sans-serif;
+}
+
+.main-title-span {
+  font-family: "Clash Display", sans-serif;
+}
+
+/* Color Theme */
+
+.color-container {
+  width: 50px;
+  height: 50px;
+  border: 1.5px solid black;
+  border-radius: 50%;
+  background: transparent;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.main-color {
+  width: 35px;
+  height: 35px;
+  border-radius: inherit;
+}
+
+/* Loading */
+
+.loading-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* scroll bar */
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background: #292204;
+  transition: all 0.5s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64686f;
+}
+
+::-webkit-scrollbar-track {
+  background: #eee;
+}

@@ -1,0 +1,114 @@
+nav {
+  background: transparent;
+  width: 100vw;
+  height: 80px;
+
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0;
+
+  position: relative;
+}
+
+.dummy-blend {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(138, 138, 138);
+  mix-blend-mode: soft-light;
+  z-index: -1;
+}
+
+/* Logo section */
+
+.nav-logo {
+  flex: 2;
+  padding: 0 5px;
+  height: 100%;
+  display: flex;
+}
+
+.nav-logo-figure {
+  display: none;
+}
+
+.nav-logo .main-title {
+  font-size: 16px;
+}
+
+@media screen and (min-width: 768px) {
+  .nav-logo {
+    padding: 0 40px;
+  }
+
+  .nav-logo .main-title {
+    font-size: 24px;
+  }
+
+  .nav-logo-figure {
+    display: block;
+  }
+}
+
+/* Input section */
+
+.nav-search-input {
+  display: none;
+}
+
+.nav-search-input input {
+  width: 85%;
+  height: 100%;
+  font-size: 16px;
+  margin-bottom: 15px;
+  padding: 10px 50px;
+  border-radius: 100px;
+  background: transparent;
+  /* border: none; */
+  /* box-shadow: 1px 4px 2px 2px rgba(164, 164, 164, 0.231); */
+}
+
+.nav-search-input input::placeholder {
+  font-size: 16px;
+}
+
+.nav-search-icon {
+  position: absolute;
+  left: 4%;
+  top: 13.5px;
+}
+
+.nav-search-icon svg {
+  font-size: 22px;
+  color: rgba(128, 128, 128, 0.426);
+}
+
+@media screen and (min-width: 700px) {
+  .nav-search-input {
+    flex: 2;
+    height: 50px;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+  }
+}
+
+@media screen and (min-width: 520px) and (max-width: 900px) {
+  .nav-search-input input {
+    font-size: 13px;
+  }
+
+  .nav-search-input input::placeholder {
+    font-size: 13px;
+  }
+}
+
+/* Color Selector */
+
+.nav-color-selector {
+  flex: 1;
+  padding: 0 40px;
+  display: flex;
+  justify-content: flex-end;
+}
