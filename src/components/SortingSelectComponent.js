@@ -2,6 +2,10 @@ import { useState } from "react";
 
 import { FiChevronDown } from "react-icons/fi";
 
+/**
+ * The SortingSelectComponent renders a self made select element which is used to detemine the value of the sorting state
+ */
+
 const SortingSelectComponent = ({ sorting, setSorting }) => {
   const options = ["latest", "oldest", "a-z", "z-a"];
   const [isOpen, setIsOpen] = useState(false);

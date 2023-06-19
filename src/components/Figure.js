@@ -7,6 +7,10 @@ import { closeSideModal } from "../Features/listSlice";
 
 import ColorThief from "colorthief";
 
+/**
+ * The Figure component returns an figure element containing an image which is the Poster of the selected movie and the background is determined by the extracting the secondary and primary colors of the Poster image
+ */
+
 const Figure = ({ poster }) => {
   const [rgb, setRgb] = useState([]);
   const dispatch = useDispatch();

@@ -10,6 +10,10 @@ import imdb from "../images/imdb.png";
 import tomato from "../images/tomato.png";
 import { toast } from "react-toastify";
 
+/**
+ * The SideModal component contains functions that are used to fetch and display more info about a particular movie.
+ */
+
 const SideModal = () => {
   const { movieId, isModalOpen } = useSelector((state) => state.movieList);
   const [singleMovieDetails, setSingleMovieDetails] = useState(dummyObject);

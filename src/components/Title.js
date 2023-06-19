@@ -1,6 +1,9 @@
 import "../styling/homeview.css";
 import { useSelector } from "react-redux";
 
+/**
+ * The Title component represents the logo of the app */
+
 const Title = ({ fontSize, margin }) => {
   const { generalColor } = useSelector((state) => state.generalColor);
 

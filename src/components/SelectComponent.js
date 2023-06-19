@@ -2,6 +2,10 @@ import { useState } from "react";
 
 import { FiChevronDown } from "react-icons/fi";
 
+/**
+ * The SelectComponent renders a self made select element which is used to determine the number of items on a page
+ */
+
 const SelectComponent = ({ itemsPerPage, setItemsPerPage }) => {
   const options = [8, 10];
   const [isOpen, setIsOpen] = useState(false);

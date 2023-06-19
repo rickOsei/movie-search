@@ -3,7 +3,9 @@ import ColorSelector from "./ColorSelector";
 import "../styling/colortheme.css";
 import { useSelector, useDispatch } from "react-redux";
 import { closeModal, setGeneralColor } from "../Features/colorSlice";
-
+/**
+ * This is a component that holds three color components and used to control the secondary color scheme of the application
+ */
 const ColorModal = () => {
   const { isColorModalOpen, generalColor } = useSelector(
     (state) => state.generalColor

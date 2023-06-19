@@ -3,6 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMovieId, openSideModal } from "../Features/listSlice";
 import "../styling/movieCard.css";
 
+/**
+ * The MovieCard component returns an article which represents a card containing the information of each individual movie. When hovered the "View More" button shows which when clicked opens the side modal which contains more information about the movie.
+ */
+
 const MovieCard = ({ Title, Year, Poster, imdbID }) => {
   const { isModalOpen, movieId } = useSelector((state) => state.movieList);
 

@@ -10,6 +10,10 @@ import Title from "./Title";
 import { setSearchItem } from "../Features/listSlice";
 import { openModal } from "../Features/colorSlice";
 
+/**
+ * The Navbar is a navbar element comprising of the logo, searchbar, which takes in an input used to make a request the api endpoint, and the ColorSelector modal.
+ */
+
 const Navbar = ({ searchTerm, setSearchTerm }) => {
   const { generalColor } = useSelector((state) => state.generalColor);
   const dispatch = useDispatch();
