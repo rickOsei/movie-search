@@ -36,7 +36,7 @@ const Figure = ({ poster }) => {
     <figure
       className="side-modal-icon"
       style={{
-        background: `rgb(${rgb})`,
+        // background: `rgb(${rgb})`,
         background: `linear-gradient(180deg,rgb(${rgb?.map(
           (v) => v + 30
         )}),rgb(${rgb?.map((v) => v - 30)}))`,

@@ -25,11 +25,15 @@ const ListView = () => {
   const { searchState } = useSelector((state) => state.movieList);
   const { generalColor } = useSelector((state) => state.generalColor);
   const [searchTerm, setSearchTerm] = useState(searchState);
-  const [movieDetails, setMovieDetails] = useState(dummyData);
+  const [movieDetails, setMovieDetails] = useState([]);
   const [sorting, setSorting] = useState("latest");
   const apiKey = "a310a0e3";
 
   const searchQuery = useDebounce(searchTerm, 1000);
+
+  /**
+   * A function that fetches a list of movies and their details that matches the searchQuery variable. Data received in response is then set to the movieDetails state
+   */
 
   const getMovieDetails = async () => {
     try {
@@ -42,12 +46,15 @@ const ListView = () => {
     }
   };
 
+  /**
+   * A useEffect function that runs the getMovieDetails function on initial render and when there is a change in the searchQuery variable
+   */
+
   useEffect(() => {
     getMovieDetails();
   }, [searchQuery]);
 
   // react paginate
-
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
@@ -63,6 +70,10 @@ const ListView = () => {
     const newOffset = (event.selected * itemsPerPage) % movieDetails?.length;
     setItemOffset(newOffset);
   };
+
+  /**
+   * A sort method applied on the currentList state holding the list of movies, so movies can be sorted based on the value of the sorting state
+   */
 
   const sortedProduct = currentItems?.sort((a, b) => {
     switch (sorting) {
@@ -94,6 +105,10 @@ const ListView = () => {
         return (a = b);
     }
   });
+
+  /**
+   * A conditional rendering to issue the above code runs only when the currentItems state is populated.
+   */
 
   // Conditional rendering
   if (currentItems?.length === 0) {

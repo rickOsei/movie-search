@@ -1,7 +1,7 @@
 import { BsEyeFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
 /**
- * The ViewButton component is rendered in the MovieCard component, which takes in an onClick event listener that helps open and display more info in the SideModal component.
+ * The ViewButton component is rendered in the MovieCard component, which takes in an onClick event listener that helps open and display more info in the SideModal
  */
 
 const ViewButton = ({ handleClick }) => {

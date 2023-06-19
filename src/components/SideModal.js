@@ -20,6 +20,9 @@ const SideModal = () => {
   const [reviews, setReviews] = useState([]);
   const apiKey = "a310a0e3";
 
+  /**
+   * A function that fetches more details of a particular movie sets it to the singleMovieDetails state
+   */
   const getMoreMovieDetails = async () => {
     if (movieId) {
       try {
@@ -32,6 +35,10 @@ const SideModal = () => {
       }
     }
   };
+
+  /**
+   * A useEffect func that runs the getMoreMovieDetails function on initial render and whenever there is  change in the movieId slice
+   */
 
   useEffect(() => {
     getMoreMovieDetails();
@@ -53,6 +60,10 @@ const SideModal = () => {
   const key = "9WouZZwa9H2ftdsaUazlM23fIRtgrBVr";
   const url = `https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=${Title}&api-key=${key}`;
 
+  /**
+   * A function to fetch the reviews available for a particular movie and sets the review to the reviews state
+   */
+
   const getReviews = async () => {
     try {
       const { data } = await axios.get(url);
@@ -64,6 +75,10 @@ const SideModal = () => {
       toast.error(`${error.response.data.fault.faultstring}`);
     }
   };
+
+  /**
+   * A useEffect hook that runs the getReviews func on initial render and whenever there is change to the singleMovieDetails
+   */
 
   useEffect(() => {
     getReviews();
