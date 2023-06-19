@@ -2,22 +2,22 @@ import { useState } from "react";
 
 import { FiChevronDown } from "react-icons/fi";
 
-const SelectComponent = ({ itemsPerPage, setItemsPerPage }) => {
-  const options = [8, 10];
+const SortingSelectComponent = ({ sorting, setSorting }) => {
+  const options = ["latest", "oldest", "a-z", "z-a"];
   const [isOpen, setIsOpen] = useState(false);
 
   const toggling = () => setIsOpen(!isOpen);
 
   const onOptionClicked = (value) => () => {
-    setItemsPerPage(value);
+    setSorting(value);
     setIsOpen(false);
   };
 
   return (
     <article>
-      <div className="dropdown-container" onClick={toggling}>
-        <div className="dropdown-header-icon">
-          <div className="dropdown-header">{itemsPerPage || 8}</div>
+      <div className="sorting-dropdown-container" onClick={toggling}>
+        <div className="sorting-dropdown-header-icon">
+          <div className="sorting-dropdown-header">{sorting || "latest"}</div>
           <FiChevronDown />
         </div>
         {isOpen && (
@@ -29,8 +29,7 @@ const SelectComponent = ({ itemsPerPage, setItemsPerPage }) => {
                   key={Math.random()}
                   className="listItem"
                   style={{
-                    background:
-                      itemsPerPage === option ? "#818181" : "transparent",
+                    background: sorting === option ? "#818181" : "transparent",
                   }}
                 >
                   {option}
@@ -44,4 +43,4 @@ const SelectComponent = ({ itemsPerPage, setItemsPerPage }) => {
   );
 };
 
-export default SelectComponent;
+export default SortingSelectComponent;

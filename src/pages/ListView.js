@@ -3,9 +3,10 @@ import "../styling/listview.css";
 import { useEffect, useState } from "react";
 
 import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import ReactPaginate from "react-paginate";
 import ReactLoading from "react-loading";
+import { toast } from "react-toastify";
 
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { MdOutlineSearch } from "react-icons/md";
@@ -16,25 +17,19 @@ import SideModal from "../components/SideModal";
 import ColorModal from "../components/ColorModal";
 import { dummyData } from "../dummy-data";
 
-import { setSearchItem } from "../Features/listSlice";
 import SelectComponent from "../components/SelectComponent";
+import SortingSelectComponent from "../components/SortingSelectComponent";
 import { useDebounce } from "../components/useDebounce";
 
 const ListView = () => {
-  const { movieList, searchState, isLoading, isModalOpen } = useSelector(
-    (state) => state.movieList
-  );
+  const { searchState } = useSelector((state) => state.movieList);
   const { generalColor } = useSelector((state) => state.generalColor);
-
-  const dispatch = useDispatch();
-
   const [searchTerm, setSearchTerm] = useState(searchState);
-
   const [movieDetails, setMovieDetails] = useState(dummyData);
-
+  const [sorting, setSorting] = useState("latest");
   const apiKey = "a310a0e3";
 
-  const searchQuery = useDebounce(searchTerm, 2000);
+  const searchQuery = useDebounce(searchTerm, 1000);
 
   const getMovieDetails = async () => {
     try {
@@ -43,16 +38,13 @@ const ListView = () => {
       );
       setMovieDetails(data.Search);
     } catch (error) {
-      console.log(error);
+      toast.error(`${error.response.data.Error}`);
     }
   };
 
   useEffect(() => {
     getMovieDetails();
   }, [searchQuery]);
-
-  console.log(movieDetails);
-  console.log(searchQuery);
 
   // react paginate
 
@@ -63,51 +55,59 @@ const ListView = () => {
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(movieDetails.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(movieDetails.length / itemsPerPage));
+    setCurrentItems(movieDetails?.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(movieDetails?.length / itemsPerPage));
   }, [itemOffset, itemsPerPage, searchQuery, movieDetails]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % movieDetails.length;
+    const newOffset = (event.selected * itemsPerPage) % movieDetails?.length;
     setItemOffset(newOffset);
   };
 
-  // search logic
-
-  // const dispatchSearchItem = () => {
-  //   if (searchTerm) {
-  //     dispatch(setSearchItem(searchTerm));
-  //   }
-  // };
-  // useEffect(() => {
-  //   dispatchSearchItem();
-  // }, [searchTerm]);
-
-  // const filteredList = currentItems.filter((pokemon) => {
-  //   if (searchState && searchTerm) {
-  //     return pokemon.name
-  //       .toLocaleLowerCase()
-  //       .includes(searchState.toLocaleLowerCase());
-  //   } else {
-  //     return pokemon;
-  //   }
-  // });
+  const sortedProduct = currentItems?.sort((a, b) => {
+    switch (sorting) {
+      case "oldest":
+        return a.Year.split("–")[0] - b.Year.split("–")[0];
+      case "latest":
+        return b.Year.split("–")[0] - a.Year.split("–")[0];
+      case "a-z":
+        const x = a.Title.toLocaleUpperCase();
+        const y = b.Title.toLocaleUpperCase();
+        if (x < y) {
+          return -1;
+        }
+        if (x > y) {
+          return 1;
+        }
+        return 0;
+      case "z-a":
+        const m = a.Title.toLocaleUpperCase();
+        const n = b.Title.toLocaleUpperCase();
+        if (m < n) {
+          return 1;
+        }
+        if (m > n) {
+          return -1;
+        }
+        return 0;
+      default:
+        return (a = b);
+    }
+  });
 
   // Conditional rendering
-  console.log(currentItems);
-
-  // if (currentItems.length === 0) {
-  //   return (
-  //     <div className="loading-container">
-  //       <ReactLoading
-  //         color={generalColor}
-  //         height={100}
-  //         width={100}
-  //         type={"spin"}
-  //       />
-  //     </div>
-  //   );
-  // }
+  if (currentItems?.length === 0) {
+    return (
+      <div className="loading-container">
+        <ReactLoading
+          color={generalColor}
+          height={100}
+          width={100}
+          type={"spin"}
+        />
+      </div>
+    );
+  }
   return (
     <>
       <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
@@ -123,9 +123,12 @@ const ListView = () => {
           <MdOutlineSearch />
         </div>
       </div>
+      <div className="sorting-row">
+        <SortingSelectComponent sorting={sorting} setSorting={setSorting} />
+      </div>
       <section className="movie-list-section">
         <div className="movie-list-container">
-          {currentItems.map((movie, index) => {
+          {sortedProduct?.map((movie, index) => {
             return <MovieCard {...movie} key={index} />;
           })}
         </div>

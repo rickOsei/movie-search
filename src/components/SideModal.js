@@ -4,13 +4,11 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import Figure from "./Figure";
-import Similar from "./Similar";
-import AboutPokemon from "./AboutPokemon";
-import PokemonStats from "./PokemonStats";
 import axios from "axios";
 import { dummyObject } from "../dummy-data";
 import imdb from "../images/imdb.png";
 import tomato from "../images/tomato.png";
+import { toast } from "react-toastify";
 
 const SideModal = () => {
   const { movieId, isModalOpen } = useSelector((state) => state.movieList);
@@ -26,7 +24,7 @@ const SideModal = () => {
         );
         setSingleMovieDetails(data);
       } catch (error) {
-        console.log(error);
+        toast.error(`${error.response.data.Error}`);
       }
     }
   };
@@ -59,27 +57,26 @@ const SideModal = () => {
         setReviews(data.results);
       }
     } catch (error) {
-      console.log(error);
+      toast.error(`${error.response.data.fault.faultstring}`);
     }
   };
 
   useEffect(() => {
     getReviews();
-  }, [movieId, singleMovieDetails]);
-  console.log(reviews);
+  }, [singleMovieDetails]);
 
-  // if (singleMovieDetails.length<1) {
-  //   return (
-  //     <aside
-  //       className="side-modal-container"
-  //       style={{
-  //         right: isModalOpen ? 0 : "-150%",
-  //       }}
-  //     >
-  //       <h1>Loading...</h1>
-  //     </aside>
-  //   );
-  // }
+  if (singleMovieDetails.length < 1) {
+    return (
+      <aside
+        className="side-modal-container"
+        style={{
+          right: isModalOpen ? 0 : "-150%",
+        }}
+      >
+        <h1>Loading...</h1>
+      </aside>
+    );
+  }
 
   return (
     <aside
@@ -105,7 +102,7 @@ const SideModal = () => {
           <div className="ratings-row">
             {Ratings.map((rating, index) => {
               return (
-                <div className="ratings">
+                <div className="ratings" key={index}>
                   <img src={tomato} alt="rating" />
                   {rating.Value}
                 </div>

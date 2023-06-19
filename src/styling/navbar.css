@@ -67,8 +67,6 @@ nav {
   background: transparent;
   color: rgb(137, 137, 137);
   outline: none;
-  /* border: none; */
-  /* box-shadow: 1px 4px 2px 2px rgba(164, 164, 164, 0.231); */
 }
 
 .nav-search-input input::placeholder {

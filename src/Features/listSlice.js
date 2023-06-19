@@ -1,24 +1,9 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import axios from "axios";
-
-// export const getPokemonData = createAsyncThunk(
-//   "cart/getPokemonData",
-//   async () => {
-//     try {
-//       const {
-//         data: { results },
-//       } = await axios.get("https://pokeapi.co/api/v2/pokemon/?limit=500");
-//       return results;
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   }
-// );
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   movieList: [],
   movieId: "",
-  searchState: "",
+  searchState: "love",
   isModalOpen: false,
 };
 
@@ -51,18 +36,6 @@ const ListSlice = createSlice({
       };
     },
   },
-  // extraReducers: (builder) => {
-  //   builder.addCase(getPokemonData.pending, (state) => {
-  //     state.isLoading = true;
-  //   });
-  //   builder.addCase(getPokemonData.fulfilled, (state, action) => {
-  //     state.isLoading = false;
-  //     state.movieList = action.payload;
-  //   });
-  //   builder.addCase(getPokemonData.rejected, (state) => {
-  //     state.isLoading = false;
-  //   });
-  // },
 });
 
 const ListReducer = ListSlice.reducer;
